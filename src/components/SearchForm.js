@@ -21,26 +21,11 @@ class SearchForm extends Component {
       
       handleSubmit = e => {
         e.preventDefault();
-        // withRouter(({ history }) => 
-        //     history.push('/new-location'))
-
-        //     console.log(this.props.history)
-        // this.setState({ searchText: this.props.text });
         this.props.onSearchPage(this.state.searchText);
-        // this.props.searcherRoute(this.state.searchText)
         e.currentTarget.reset()
     
       }
 
-    //   handleSubmit = e => {
-    //     console.log(this.props.hist)
-    //     e.preventDefault();
-    //     // this.setState({ searchText: this.props.text });
-    //     console.log(this.props.text)
-    //     this.props.onSearchPage(this.state.searchText);
-    //     this.props.searcherRoute(this.state.searchText)
-    //     e.currentTarget.reset()
-    //   }
 
     render() {
         console.log(this.query)
