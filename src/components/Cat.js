@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  HashRouter,
+    HashRouter,
 
 } from 'react-router-dom';
 import Gallery from './Gallery'
@@ -15,12 +15,15 @@ import SearchForm from './SearchForm'
 
 class Cat extends Component {
     render() {
+
+        //test if text is === to run function searchpage
         if (this.props.text === 'cats') {
             this.props.onSearchPage(this.props.text)
-          }
-          return (
+        }
+        return (
 
-            <Gallery handle={this.props.onSearchPage} data={this.props.data} text={this.props.text}/>
+            //return photo data
+            <Gallery handle={this.props.onSearchPage} data={this.props.data} text={this.props.text} />
 
         )
     }

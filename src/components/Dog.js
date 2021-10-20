@@ -10,12 +10,14 @@ import Gallery from './Gallery'
 
 class Dog extends Component {
     render() {
+
+        //test if text is === to run function searchpage
         if (this.props.text === 'dogs') {
             this.props.onSearchPage(this.props.text)
-          }
-          return (
-
-            <Gallery handle={this.props.onSearchPage} data={this.props.data} text={this.props.text}/>
+        }
+        return (
+            //return photo data
+            <Gallery handle={this.props.onSearchPage} data={this.props.data} text={this.props.text} />
 
         )
     }
