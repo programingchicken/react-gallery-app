@@ -2,32 +2,32 @@
 import React from 'react';
 import {
     Switch,
-    Route
+    Route,
+
 } from 'react-router-dom';
 import SearchForm from './SearchForm';
+import { createBrowserHistory } from "history";
 
-import Cat from './Cat';
-import Dog from './Dog';
-import Bird from './Bird';
+
+
+
+
+
+
+
 import MainNav from './MainNav';
 
-const Header = ({ nav, data, performSearch }) => {
-    console.log(data.query)
+
+const Header = ({ navLinkSearch, data, performSearch }) => {
+
+ 
     return (
         <div className="container">
+                {/* navigation */}
+                    <MainNav navLinkSearch={navLinkSearch}/>
+                       {/* only runs if sumit is returned */}
+                       <SearchForm onSearchPage={performSearch} data={data} text={data.query} />
 
-            {/* navigation */}
-            <MainNav />
-
-            {/* only runs if sumit is returned  */}
-            <SearchForm onSearchPage={performSearch} data={data.pictures} text={data.query} />
-
-            <Switch>
-                {/* check path */}
-                <Route exact path="/cats" render={() => <Cat onSearchPage={nav} data={data.pictures} text="cats" />} />
-                <Route exact path="/dogs" render={() => <Dog onSearchPage={performSearch} data={data.pictures} text="dogs" />} />
-                <Route exact path="/birds" render={() => <Bird onSearchPage={performSearch} data={data.pictures} text="birds" />} />
-            </Switch>
         </div>
     );
 }

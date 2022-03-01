@@ -1,10 +1,14 @@
+//imports
 import React, { Component } from 'react';
-import {
-  HashRouter,
-
-} from 'react-router-dom';
+import RunPage from './RunPage'
 import Header from './Header'
 import axios from 'axios';
+import { HashRouter,Switch,Route } from 'react-router-dom';
+
+import Cat from './Cat';
+import Dog from './Dog';
+import Bird from './Bird';
+
 
 
 
@@ -12,10 +16,12 @@ import axios from 'axios';
 
 
 
-//App 
+//App class 
 class App extends Component {
 
+  //constructor for pictures array and test if the page is loading
   constructor() {
+
     super();
     this.state = {
       pictures: [],
@@ -23,23 +29,28 @@ class App extends Component {
     };
   }
 
+  // useEffect() {
+  //   this.navLinkSearch(this.data.newtext);
+  // }
 
-  //perform search
+
+//  // perform search
   componentDidMount() {
 
-    //searchBar
-    this.performSearch();
-
-    //linkSearch 
+    // //linkSearch 
     this.navLinkSearch();
+    window.history.replaceState(null, "New Page Title", `/#/cats`)
+    console.log(window.location.pathname)
+    const toString = `${window.location.href}`
 
-  };
+
+   };
 
   //search function for search bar
   performSearch = (query) => {
 
     //to stop from page from loading over and over
-    window.history.replaceState(null, "New Page Title", `/not-link/${query}`)
+    window.history.replaceState(null, "New Page Title", `/search/${query}`)
 
     if (query !== undefined) {
       //api key   
@@ -50,15 +61,12 @@ class App extends Component {
           this.setState({
             pictures: response.data.photos.photo,
             loading: false
-
-          });
+          })
 
           //not sure if these help or not but you know what they say if it's not broke don't fix it. 
           const querys = query
           return (url, querys);
-
         })
-
         .catch(error => {
           console.log('Error fetching and parsing data', error);
 
@@ -67,10 +75,10 @@ class App extends Component {
   }
 
   //search function for links
-  navLinkSearch = (query) => {
+  navLinkSearch = (query = 'cats') => {
 
-    //to stop from page from loading over and over
-    window.history.replaceState(null, "New Page Title", `/not-link/${query}`)
+    // to stop from page from loading over and over
+    // window.history.replaceState(null, "New Page Title", `/${query}`)
 
     if (query !== undefined) {
       //api key   
@@ -81,8 +89,7 @@ class App extends Component {
           this.setState({
             pictures: response.data.photos.photo,
             loading: false
-
-          });
+          })
 
           const querys = query
           return (url, querys);
@@ -100,11 +107,17 @@ class App extends Component {
 
   //app
   render() {
-    return (
+    return (  
       <HashRouter>
-        <Header className="App-header" performSearch={this.performSearch} data={this.state} nav={this.navLinkSearch} />
-      </HashRouter>
 
+          <Header className="App-header" performSearch={this.performSearch} data={this.state} navLinkSearch={this.navLinkSearch} />
+
+
+            {/* <Route exact path="/#" render={() =><Cat  loading={this.state.loading} data={this.state}  navLinkSearch={this.navLinkSearch}  text='cats'/>}  /> */}
+            <Route exact path="/cats"render={() =><Cat  loading={this.state.loading}  data={this.state} navLinkSearch={this.navLinkSearch}  text='cats'/>} />
+            <Route exact path="/dogs" render={() =><Dog  loading={this.state.loading}  data={this.state} navLinkSearch={this.navLinkSearch}  text='dogs'/>}/>
+            <Route exact path="/birds" render={() =><Bird  loading={this.state.loading}  data={this.state} navLinkSearch={this.navLinkSearch}  text='birds'/>} />
+      </HashRouter>
     );
   }
 }

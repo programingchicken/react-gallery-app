@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Gallery from './Gallery';
 import {
     NavLink,
+    Switch
 } from 'react-router-dom';
 
 
@@ -12,7 +13,8 @@ import {
 class SearchForm extends Component {
 
     state = {
-        searchText: ''
+        searchText: '',
+        oldSearchText: ''
     }
 
     //sets searchText to the change in input i belive 
@@ -30,13 +32,12 @@ class SearchForm extends Component {
 
 
     render() {
-        console.log(this.query)
+        console.log(this.state.searchText)
         return (
             <div>
                 <form onSubmit={this.handleSubmit} >
 
-                    {/* not sure if this was needed  */}
-                    <NavLink to='/:search'></NavLink>
+                <NavLink to='/search/:search'></NavLink>
 
                     <div className="search-form">
                         <input type="search"
@@ -51,9 +52,8 @@ class SearchForm extends Component {
                             </svg>
                         </button>
                     </div>
-
-                    {/* builds searchbar photos */}
-                    <Gallery handle={this.props.onSearchPage} data={this.props.data} text={this.props.text} />
+                                        {/* builds searchbar photos */}
+                                        <Gallery data={this.props.data.pictures} text={''} />
                 </form>
             </div>
         );
