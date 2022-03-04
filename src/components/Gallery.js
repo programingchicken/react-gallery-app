@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import PageNotFound from "./NotFound"
+import PageNotFound from './NotFound';
 
 
 class Gallery extends Component {
+
     render() {
         //loads the objects into arrays
         const newIdArray = this.props.data.map(element => element.id);
@@ -14,7 +15,8 @@ class Gallery extends Component {
         console.log(newServerArray)
         console.log(newSecretArray)
         console.log(this.props.text)
-        if (newFarmArray.length !== 0) {
+        console.log(this.props.data)
+        if (newIdArray.length === 16) {
             return (
                 <div className="photo-container">
                     <h2>Results</h2>
@@ -77,7 +79,7 @@ class Gallery extends Component {
         } else {
             return (
                 <div className="photo-container">
-                    <PageNotFound />
+                <PageNotFound />
                 </div>
             )
         }

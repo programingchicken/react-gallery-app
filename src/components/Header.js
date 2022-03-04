@@ -18,15 +18,15 @@ import { createBrowserHistory } from "history";
 import MainNav from './MainNav';
 
 
-const Header = ({ navLinkSearch, data, performSearch }) => {
+const Header = ({ navLinkSearch, data }) => {
 
  
     return (
         <div className="container">
                 {/* navigation */}
-                    <MainNav navLinkSearch={navLinkSearch}/>
+                    <MainNav navLinkSearch={navLinkSearch} data={data}/>
                        {/* only runs if sumit is returned */}
-                       <SearchForm onSearchPage={performSearch} data={data} text={data.query} />
+                       <SearchForm navLinkSearch={navLinkSearch} data={data} text={data.query} />
 
         </div>
     );

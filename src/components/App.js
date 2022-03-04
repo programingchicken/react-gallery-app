@@ -1,13 +1,13 @@
 //imports
 import React, { Component } from 'react';
-import RunPage from './RunPage'
 import Header from './Header'
 import axios from 'axios';
-import { HashRouter,Switch,Route } from 'react-router-dom';
-
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import Cat from './Cat';
 import Dog from './Dog';
 import Bird from './Bird';
+import SearchRoute from './SearchRoute';
+
 
 
 
@@ -24,27 +24,57 @@ class App extends Component {
 
     super();
     this.state = {
+      bird: [],
+      dog: [],
+      cat: [],
       pictures: [],
-      loading: true
+      loading: false,
+      newName: '',
+      error: null
     };
-  }
+
+    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9e97324046fb93267d31f75c590973bf&text=dogs&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
+      .then(response => {
+        this.setState({
+          dog: response.data.photos.photo,
+        })
+  })
+
+  axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9e97324046fb93267d31f75c590973bf&text=cats&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
+  .then(response => {
+    this.setState({
+      cat: response.data.photos.photo,
+    })
+})
+axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9e97324046fb93267d31f75c590973bf&text=birds&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
+.then(response => {
+  this.setState({
+    bird: response.data.photos.photo,
+  })
+})
+
+
+
+}
 
   // useEffect() {
   //   this.navLinkSearch(this.data.newtext);
   // }
 
 
-//  // perform search
-  componentDidMount() {
+  //  // perform search
+  componentWillMount() {
+    window.history.pushState({}, "", `/cats`)
+    if (document.querySelector('.active') !== null) {
+      const activeLink = document.querySelector('.active')
+      activeLink.className = 'notActive';
+    }
 
-    // //linkSearch 
-    this.navLinkSearch();
-    window.history.replaceState(null, "New Page Title", `/#/cats`)
-    console.log(window.location.pathname)
-    const toString = `${window.location.href}`
+  };
 
 
-   };
+
+
 
   //search function for search bar
   performSearch = (query) => {
@@ -53,71 +83,54 @@ class App extends Component {
     window.history.replaceState(null, "New Page Title", `/search/${query}`)
 
     if (query !== undefined) {
-      //api key   
-      const url = axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9e97324046fb93267d31f75c590973bf&text=${query}&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
 
-        //sets the state to data
-        .then(response => {
-          this.setState({
-            pictures: response.data.photos.photo,
-            loading: false
-          })
 
-          //not sure if these help or not but you know what they say if it's not broke don't fix it. 
-          const querys = query
-          return (url, querys);
-        })
-        .catch(error => {
-          console.log('Error fetching and parsing data', error);
-
-        });
     }
   }
 
   //search function for links
-  navLinkSearch = (query = 'cats') => {
+  navLinkSearch = async (query) => {
 
     // to stop from page from loading over and over
     // window.history.replaceState(null, "New Page Title", `/${query}`)
+        //api key
+        
+         const url = await axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9e97324046fb93267d31f75c590973bf&text=${query}&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
+          //sets the state to data
+          .then(response => {
+              this.setState({
+                pictures: response.data.photos.photo,
+                newName: query,
+                error: false
+              })
 
-    if (query !== undefined) {
-      //api key   
-      const url = axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9e97324046fb93267d31f75c590973bf&text=${query}&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
-
-        //sets the state to data
-        .then(response => {
-          this.setState({
-            pictures: response.data.photos.photo,
-            loading: false
+            //not sure if these help or not but you know what they say if it's not broke don't fix it. 
+            const querys = query
+            return (url, querys);
           })
-
-          const querys = query
-          return (url, querys);
-
-        })
-
-        .catch(error => {
-          console.log('Error fetching and parsing data', error);
-
+          .catch(error => {
+            console.log('Error fetching and parsing data', error);
+            this.setState({
+                error: true
+          })
         });
-    }
   }
 
 
 
   //app
   render() {
-    return (  
-      <HashRouter>
+    return (
+      <BrowserRouter>
 
-          <Header className="App-header" performSearch={this.performSearch} data={this.state} navLinkSearch={this.navLinkSearch} />
-
-
-            {/* <Route exact path="/#" render={() =><Cat  loading={this.state.loading} data={this.state}  navLinkSearch={this.navLinkSearch}  text='cats'/>}  /> */}
-            <Route exact path="/cats"render={() =><Cat  loading={this.state.loading}  data={this.state} navLinkSearch={this.navLinkSearch}  text='cats'/>} />
-            <Route exact path="/dogs" render={() =><Dog  loading={this.state.loading}  data={this.state} navLinkSearch={this.navLinkSearch}  text='dogs'/>}/>
-            <Route exact path="/birds" render={() =><Bird  loading={this.state.loading}  data={this.state} navLinkSearch={this.navLinkSearch}  text='birds'/>} />
-      </HashRouter>
+        <Header className="App-header" data={this.state} navLinkSearch={this.navLinkSearch} />
+        <Switch>
+          <Route path="/search/" render={() => <SearchRoute data={this.state} navLinkSearch={this.navLinkSearch} error={this.state.error}/>} />
+          <Route exact path="/cats" render={() => <Cat data={this.state} navLinkSearch={this.navLinkSearch}  text='cats' />} />
+          <Route exact path="/dogs" render={() => <Dog data={this.state} navLinkSearch={this.navLinkSearch}  text='dogs' />} />
+          <Route exact path="/birds" render={() => <Bird data={this.state} navLinkSearch={this.navLinkSearch}  text='birds' />} />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }

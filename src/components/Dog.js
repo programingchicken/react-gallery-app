@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Gallery from './Gallery'
+import Cat from './Cat';
 
 
 
@@ -9,12 +10,11 @@ import Gallery from './Gallery'
 
 
 class Dog extends Component {
-    render() {
-        //test if text is === to run function searchpage
 
+    render() {
             return (
                 //return photo data
-                <Gallery data={this.props.data.pictures} text={this.props.text} />
+                <Gallery data={this.props.data.dog} error={false} text='dogs' />
     
             )
     }

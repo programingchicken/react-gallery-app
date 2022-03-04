@@ -9,12 +9,11 @@ import Gallery from './Gallery'
 
 
 class Cat extends Component {
-    render() {
-        //test if text is === to run function searchpage
 
+    render() {
             return (
                 //return photo data
-                <Gallery data={this.props.data.pictures} text='cats' />
+                <Gallery data={this.props.data.cat} error={false} text='cats' />
     
             )
     }

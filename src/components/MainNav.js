@@ -1,4 +1,4 @@
-import { NavLink,NavNavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import React, { Component } from 'react';
 
 
@@ -14,9 +14,9 @@ class MainNav extends Component {
 
             <nav className="main-nav">
                 <ul>
-                    <li><NavLink to='/cats' onClick={() => this.props.navLinkSearch('cats')}>Cats</NavLink></li>
-                    <li><NavLink to='/dogs' onClick={() => this.props.navLinkSearch('dogs')}>Dogs</NavLink></li>
-                    <li><NavLink to='/birds' onClick={() => this.props.navLinkSearch('birds')}>Birds</NavLink></li>
+                    <li><NavLink to='/cats'>Cats</NavLink></li>
+                    <li><NavLink to='/dogs'>Dogs</NavLink></li>
+                    <li><NavLink to='/birds'>Birds</NavLink></li>
                 </ul>
             </nav>
         );
