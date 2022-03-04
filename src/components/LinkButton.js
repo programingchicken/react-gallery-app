@@ -1,6 +1,6 @@
 // file: /components/LinkButton.jsx
 
-//got this off 
+//got this all off stack overflow litarly saved me hours
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'

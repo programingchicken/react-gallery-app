@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Gallery from './Gallery'
-import Cat from './Cat';
+
 
 
 

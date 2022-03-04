@@ -1,10 +1,4 @@
 import React, { Component } from 'react';
-import Gallery from './Gallery';
-import {
-    NavLink,
-    Switch,
-    Route
-} from 'react-router-dom';
 import LinkButton from './LinkButton'
 
 
