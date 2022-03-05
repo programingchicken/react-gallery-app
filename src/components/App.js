@@ -7,8 +7,9 @@ import Cat from './Cat';
 import Dog from './Dog';
 import Bird from './Bird';
 import SearchRoute from './SearchRoute';
+const Config  = require('./Config.json')
 
-
+const {api} = Config
 
 
 
@@ -33,20 +34,20 @@ class App extends Component {
       error: null
     };
 
-    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9e97324046fb93267d31f75c590973bf&text=dogs&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
+    axios.get(api + `&text=dogs&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
           dog: response.data.photos.photo,
         })
   })
 
-  axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9e97324046fb93267d31f75c590973bf&text=cats&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
+  axios.get(api +`&text=cats&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
   .then(response => {
     this.setState({
       cat: response.data.photos.photo,
     })
 })
-axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9e97324046fb93267d31f75c590973bf&text=birds&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
+axios.get(api + `&text=birds&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
 .then(response => {
   this.setState({
     bird: response.data.photos.photo,
@@ -95,7 +96,7 @@ axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api
     // window.history.replaceState(null, "New Page Title", `/${query}`)
         //api key
         
-         const url = await axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9e97324046fb93267d31f75c590973bf&text=${query}&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
+         const url = await axios.get(api + `&text=${query}&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
           //sets the state to data
           .then(response => {
               this.setState({
