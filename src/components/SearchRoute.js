@@ -3,7 +3,7 @@ import Gallery from './Gallery'
 
 
 
-// const apiKey = "9e97324046fb93267d31f75c590973bf"
+
 
 
 
