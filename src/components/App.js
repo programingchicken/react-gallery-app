@@ -7,9 +7,12 @@ import Cat from './Cat';
 import Dog from './Dog';
 import Bird from './Bird';
 import SearchRoute from './SearchRoute';
-const Config  = require('./Config.json')
 
-const {api} = Config
+//config js import
+import api from "./config.js"
+
+
+
 
 
 
@@ -41,7 +44,7 @@ class App extends Component {
         })
   })
 
-  axios.get(api +`&text=cats&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
+  axios.get(api + `&text=cats&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
   .then(response => {
     this.setState({
       cat: response.data.photos.photo,
