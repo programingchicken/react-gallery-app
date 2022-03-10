@@ -12,7 +12,7 @@ import SearchRoute from './SearchRoute';
 import api from "./config.js"
 
 
-
+const apiKey = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=` + api
 
 
 
@@ -37,26 +37,22 @@ class App extends Component {
       error: null
     };
 
-// set up your own config file with 
-//https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=     YOUR API KEY        thats what the config file has for api
 //I have to do this so i can force it to search for dogs
-    axios.get(api + `&text=dogs&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
+    axios.get(apiKey + `&text=dogs&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
           dog: response.data.photos.photo,
         })
   })
-//https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=     YOUR API KEY        thats what the config file has for api
 //I have to do this so i can force it to search for cats
-  axios.get(api + `&text=cats&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
+  axios.get(apiKey + `&text=cats&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
   .then(response => {
     this.setState({
       cat: response.data.photos.photo,
     })
 })
-//https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=     YOUR API KEY        thats what the config file has for api
 //I have to do this so i can force it to search for birds
-axios.get(api + `&text=birds&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
+axios.get(apiKey + `&text=birds&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
 .then(response => {
   this.setState({
     bird: response.data.photos.photo,
@@ -106,9 +102,9 @@ axios.get(api + `&text=birds&per_page=16&sort=relevance&content_type=1&format=js
         //api key
         
 
-        //https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=   '  YOUR API KEY   '    thats what the config file has for api 
+      
         //I have to do this so i can force it to search for a search query
-         const url = await axios.get(api + `&text=${query}&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
+         const url = await axios.get(apiKey + `&text=${query}&per_page=16&sort=relevance&content_type=1&format=json&nojsoncallback=1`)
           //sets the state to data
           .then(response => {
               this.setState({
